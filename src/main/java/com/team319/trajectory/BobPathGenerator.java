@@ -15,7 +15,7 @@ import com.team319.ui.PathViewer;
 
 public class BobPathGenerator extends PathGenerator {
 
-	public static Path makePath(BobPath bobPath) {
+	public static Path makePath(BobPath bobPath) {		
 		Path p = new Path();
 
 		p = PathGenerator.makePath(bobPath.getWaypointSequence(), bobPath.getConfig(),

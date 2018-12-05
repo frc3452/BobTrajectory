@@ -201,7 +201,8 @@ public class BobPathCreator extends AbstractBobPathCreator {
 				FIELD_WIDTH.f() - FIELD_WALL_TO_EDGE_OF_SCALE_BUCKET.f() + robotWidth.f_2(), 0, 0, 3);
 
 		left.addWaypoint(mLeftScaleCorner, 0, 3);
-		left.addWaypoint(mLeftScaleTurnAround, 0, 3);
+		left.addWaypoint(mLeftScaleTurnAround.x,mLeftScaleTurnAround.y , mLeftScaleTurnAround.theta, 0, 3);
+		// left.addWaypoint(mLeftScaleTurnAround.x, mLeftScaleTurnAround.y, mLeftScaleTurnAround.theta, 0, 3);
 		
 
 		left.print();

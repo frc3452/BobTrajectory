@@ -9,6 +9,17 @@
             "stopOnEntry": false,
             "mainClass": "com.team319.BobPathCreator",
             "args": "",
+            "projectName": "BobTrajectory-Mine"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BobPathCreator",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.team319.BobPathCreator",
+            "args": "",
             "projectName": "BobTrajectory"
         },
         {

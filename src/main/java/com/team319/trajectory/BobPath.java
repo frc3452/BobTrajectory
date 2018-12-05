@@ -43,9 +43,9 @@ public class BobPath {
 		this.waypointSequence.addWaypoint(wp);
 	}
 
-	public void addWaypointRadians(double x, double y, double theta_rad, double endVelocity, double maxVelocity) {
-		this.waypointSequence.addWaypoint(new Waypoint(x, y, theta_rad, endVelocity, maxVelocity));
-	}
+	// public void addWaypointRadians(double x, double y, double theta_rad, double endVelocity, double maxVelocity) {
+	// 	this.waypointSequence.addWaypoint(new Waypoint(x, y, theta_rad, endVelocity, maxVelocity));
+	// }
 
 	public void addWaypoint(double x, double y, double theta_deg, double endVelocity, double maxVelocity) {
 		this.waypointSequence.addWaypoint(new Waypoint(x, y, Math.toRadians(theta_deg), endVelocity, maxVelocity));
@@ -73,31 +73,31 @@ public class BobPath {
 	}
 
 	public void print()
-    {
-        System.out.println(this.config.name);
-        for (int i = 0; i < this.waypointSequence.getNumWaypoints(); i++)
-            printWaypoint(this.waypointSequence.getWaypoint(i));
-
-        System.out.println("\n");
-    }
-
-    public void printWaypoint(Waypoint wp)
-    {
-        System.out.println("X: " + wp.x + "\tY: " + wp.y + "\tTheta: " + wp.theta);
-    }
-
-    public void printLastWaypoint()
-    {
-        printWaypoint(getLastWaypoint());
-    }
-
-public void addWaypoint(Waypoint wp, double theta, double endVelocity, double maxVelocity) {
-        this.waypointSequence.addWaypoint(new Waypoint(wp.x, wp.y, theta, endVelocity, maxVelocity));
-    }
-
+	{
+		System.out.println(this.config.name);
+		for (int i = 0; i < this.waypointSequence.getNumWaypoints(); i++)
+		printWaypoint(this.waypointSequence.getWaypoint(i));
+		
+		System.out.println("\n");
+	}
+	
+	public void printWaypoint(Waypoint wp)
+	{
+		System.out.println("X: " + wp.x + "\tY: " + wp.y + "\tTheta: " + Math.toDegrees(wp.theta));
+	}
+	
+	public void printLastWaypoint()
+	{
+		printWaypoint(getLastWaypoint());
+	}
+	
+	public void addWaypoint(Waypoint wp, double theta, double endVelocity, double maxVelocity) {
+		this.waypointSequence.addWaypoint(new Waypoint(wp.x, wp.y, Math.toRadians(theta), endVelocity, maxVelocity));
+	}
+	
 	public void addWaypoint(Waypoint wp, double endVelocity, double maxVelocity) {
-        this.waypointSequence.addWaypoint(new Waypoint(wp.x, wp.y, wp.theta, endVelocity, maxVelocity));
-    }
+		this.waypointSequence.addWaypoint(new Waypoint(wp.x, wp.y, wp.theta, endVelocity, maxVelocity));
+	}
 
 	public Waypoint getLastWaypoint() {
 		Waypoint lastWaypoint = this.waypointSequence.getWaypoint(this.waypointSequence.getNumWaypoints() - 1);

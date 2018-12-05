@@ -41,6 +41,7 @@ public class BobPathCreator extends AbstractBobPathCreator {
 		return paths;
 	}
 
+	/** MEASUREMENTS */
 	private static final Measurement FIELD_EDGE_FLAIR = new Measurement(29.69);
 	private static final Measurement FIELD_DRIVER_WALL = new Measurement(264);
 	private static final Measurement FIELD_WIDTH = new Measurement(FIELD_DRIVER_WALL.in() + FIELD_EDGE_FLAIR.in() * 2);
@@ -51,8 +52,12 @@ public class BobPathCreator extends AbstractBobPathCreator {
 
 	private static final Measurement FIELD_CENTER = new Measurement(FIELD_WIDTH.in_2());
 	private static final Measurement FIELD_DRIVER_WALL_TO_HALF_BETWEEN_SWITCH_AND_PLATFORM = new Measurement(226.73500);
-
+	
 	private static final Measurement FIELD_SWITCH_WIDTH = new Measurement(56);
+	
+	
+	private static final Measurement _switch_displacement = new Measurement(3);
+
 
 	/**STARTING POSITIONS */
 	private static Waypoint kLeftStartingPoint = new Waypoint(robotLength.f_2(),
@@ -63,14 +68,16 @@ public class BobPathCreator extends AbstractBobPathCreator {
 
 	private static Waypoint kMiddleStartingPoint = new Waypoint(robotLength.f_2(), FIELD_CENTER.f()+1-robotWidth.f_2(), 0, 0, 0);
 
-	// PATH WAYPOINTS
-	private static final Waypoint mSwitchTurnPoint = new Waypoint(kMiddleStartingPoint.x + 2.6, FIELD_CENTER.f(), 0, 0,
+
+	/** PATH WAYPOINTS */
+	private static final Waypoint mSwitchTurnPointLeft = new Waypoint(kMiddleStartingPoint.x + 2.6, FIELD_CENTER.f(), 0, 0,
 			0);
+
+	private static final Waypoint mSwitchTurnPointRight = new Waypoint(kMiddleStartingPoint.x + 2.6, FIELD_CENTER.f(), 0, 0, 0);
 
 	private static final Waypoint mCubeNearestDriverWall = new Waypoint(FIELD_DRIVER_WALL_TO_CLOSEST_PYRAMID_CUBE.f(),
 			FIELD_CENTER.f(), 0, 0, 0);
 
-	private static final Measurement _switch_displacement = new Measurement(.25, true);
 
 	private static final Waypoint mLeftSwitchFrontPlace = new Waypoint(
 			FIELD_DRIVER_WALL_TO_SWITCH.f() - robotLength.f_2() - _switch_displacement.f(),
@@ -78,7 +85,7 @@ public class BobPathCreator extends AbstractBobPathCreator {
 
 	private static final Waypoint mRightSwitchFrontPlace = new Waypoint(
 			FIELD_DRIVER_WALL_TO_SWITCH.f() - robotLength.f_2() - _switch_displacement.f(),
-			FIELD_WALL_TO_SIDE_OF_SWITCH.f() + new Measurement(1.5).in(), 0, 0, 0);
+			FIELD_WALL_TO_SIDE_OF_SWITCH.f() + robotWidth.f(), 0, 0, 0);
 
 
 	
@@ -89,23 +96,29 @@ public class BobPathCreator extends AbstractBobPathCreator {
 		switch_left.addWaypoint(kMiddleStartingPoint);
 		switch_left.addWaypoint(mLeftSwitchFrontPlace, 0, 3);
 
-		switch_left.addWaypoint(mSwitchTurnPoint, 0, 3);
+		switch_left.addWaypoint(mSwitchTurnPointLeft, 0, 3);
 
 		switch_left.addWaypoint(mCubeNearestDriverWall.x - robotLength.f_2(), mCubeNearestDriverWall.y, 0,
 				0, 3);
 
-		switch_left.addWaypoint(mSwitchTurnPoint, 0, 3);
+		switch_left.addWaypoint(mSwitchTurnPointLeft, 0, 3);
 
 		switch_left.addWaypoint(mLeftSwitchFrontPlace, 0, 3);
 
 		/** SWITCH RIGHT */
 		BobPath switch_right = new BobPath(config, "Middle_Right_Switch");
 		switch_right.addWaypoint(kMiddleStartingPoint);
+
 		switch_right.addWaypoint(mRightSwitchFrontPlace, 0, 3);
-		switch_right.addWaypoint(mSwitchTurnPoint, 0, 3);
-		switch_right.addWaypoint(mCubeNearestDriverWall, 0, 3);
-		switch_right.addWaypoint(mSwitchTurnPoint, 0, 3);
+		switch_right.addWaypoint(mSwitchTurnPointRight, 0, 3);
+
+		switch_right.addWaypoint(mCubeNearestDriverWall.x - robotLength.f_2(), mCubeNearestDriverWall.y, 0,
+		0, 3);
+
+		switch_right.addWaypoint(mSwitchTurnPointRight, 0, 3);
+
 		switch_right.addWaypoint(mRightSwitchFrontPlace, 0, 3);
+
 		return asList(switch_left, switch_right);
 	}
 
@@ -134,7 +147,7 @@ public class BobPathCreator extends AbstractBobPathCreator {
 		BobPath left = new BobPath(config, "Left_Left_Switch");
 		left.addWaypoint(kLeftStartingPoint);
 		left.addWaypointRelative(FIELD_DRIVER_WALL_TO_SWITCH.f() - 2.5, 1, 0, 2.5, 3);
-		left.addWaypoint(FIELD_DRIVER_WALL_TO_SWITCH.f() + 2.5,FIELD_WIDTH.f() - FIELD_WALL_TO_SIDE_OF_SWITCH.f() + robotLength.f_2() + .25, -89.99, 0, 3);
+		left.addWaypoint(FIELD_DRIVER_WALL_TO_SWITCH.f() + 2.5, FIELD_WIDTH.f() - FIELD_WALL_TO_SIDE_OF_SWITCH.f() + robotLength.f_2() + _switch_displacement.f(), -89.99, 0, 3);
 
 		BobPath right = new BobPath(config, "Left_Right_Switch");
 		right.addWaypoint(kLeftStartingPoint);
@@ -151,7 +164,7 @@ public class BobPathCreator extends AbstractBobPathCreator {
 		BobPath right = new BobPath(config, "Right_Right_Switch");
 		right.addWaypoint(kRightStartingPoint);
 		right.addWaypointRelative(FIELD_DRIVER_WALL_TO_SWITCH.f() - 2.5, -1, 0, 2.5, 3);
-		right.addWaypoint(FIELD_DRIVER_WALL_TO_SWITCH.f() + 2.5, FIELD_WALL_TO_SIDE_OF_SWITCH.f() - robotLength.f_2() - .25, 89.99, 0, 3);
+		right.addWaypoint(FIELD_DRIVER_WALL_TO_SWITCH.f() + 2.5, FIELD_WALL_TO_SIDE_OF_SWITCH.f() - robotLength.f_2() - _switch_displacement.f(), 89.99, 0, 3);
 
 		BobPath left = new BobPath(config, "Right_Left_Switch");
 		left.addWaypoint(kRightStartingPoint);
